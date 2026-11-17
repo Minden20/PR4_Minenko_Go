@@ -1,0 +1,35 @@
+### Запити для розширення REST Client (VS Code). Сервер: go run .
+@base = http://localhost:8080/api/v1/devices
+
+### 1. Створення пристрою (201 Created)
+POST {{base}}
+Content-Type: application/json
+
+{"name":"Main Thermal Sensor","ip_address":"192.168.1.50","type":"sensor","status":"online"}
+
+### 2. Список пристроїв (200 OK)
+GET {{base}}
+
+### 3. Пристрій за ID (200 OK)
+GET {{base}}/dev-001
+
+### 4. Неіснуючий пристрій (404 Not Found)
+GET {{base}}/dev-999
+
+### 5. Оновлення (200 OK)
+PUT {{base}}/dev-001
+Content-Type: application/json
+
+{"name":"Main Thermal Sensor","ip_address":"192.168.1.51","type":"sensor","status":"offline"}
+
+### 6. Видалення (204 No Content)
+DELETE {{base}}/dev-001
+
+### 7. Повторне читання після видалення (404 Not Found)
+GET {{base}}/dev-001
+
+### 8. Валідація: відсутні обов'язкові поля (400 Bad Request)
+POST {{base}}
+Content-Type: application/json
+
+{"name":"Broken device"}
